@@ -84,7 +84,7 @@ const animate = () =>{
 }
 
 function update() {
-    //clear()
+    clear()
     drawPlayer()
     newPos()
     animate()
@@ -132,12 +132,14 @@ class Bullet {
         this.radius = 20
     }
     drawBullet(){
+        ctx.fillStyle = '#000'
         ctx.beginPath()
-        ctx.arc(this.position.x, this.position.y, this.raduis, 0, Math.PI*2)
-        ctx.fillStyle = 'black'
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2, true)
         ctx.fill()
-        ctx.closePath()
-        //console.log(this.position.y)
+        // ctx.closePath()
+        console.log(`pos(${this.position.x},${this.position.y}, rad: ${this.radius} vel(${this.velocity.x}, ${this.velocity.y})`);
+        // ctx.fillStyle = '#000';
+        // ctx.fillRect(this.position.x,this.position.y,100,100);
     }
     update(){
         this.position.x += this.velocity.x
@@ -164,7 +166,7 @@ const shotCheck = (e) => {
             },
             velocity:{
                 x:0,
-                y: -.02
+                y: -1
             }
         }))
         console.log('shot')
