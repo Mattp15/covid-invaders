@@ -163,16 +163,17 @@ document.addEventListener('keyup', keyUp)
 // }
 
 class Drop {
-    constructor(image, x){
+    constructor(image, player){
         this.image = new Image()
         this.image.src = image
-        this.x = x
+        this.x = player.x;
         this.y = 550
         this.w = 50
         this.h = 50
         this.dy = 0
         this.dx = 0
         this.speed = 5
+        this.owner = player
     }
     drawDrop(){
         ctx3.drawImage(player1Drop, this.x, this.y, this.w, this.h)
@@ -203,11 +204,67 @@ class Drop {
 
 const shotCheck = (e) => {
     if(e.code === 'ShiftLeft'){
-        const drop = new Drop ('https:://i.imgur.com/KqKypNk.png',firstPlayer.x)
-        dropArray.push(drop)
-        drop.shoot(firstPlayer)
+        const drop = new Drop ('https:://i.imgur.com/KqKypNk.png', game.player1)
+        game.shots.push(drop)
+//        drop.shoot(firstPlayer)
     }
 }
+
+class Player {
+    w = 100;
+    h = 100;
+    x = 0;
+    y = 550;
+    speed = 5;
+    dx = 0;
+    dy = 0;
+
+    constructor (w,h,x,y,speed,dx,dy) {
+        this.w = w;
+        this.h = h;
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+        this.dx = dx;
+        this.dy = dy;
+    }
+
+    update() {
+        //do stuff
+    }
+
+    draw() {
+        //do stuff
+    }
+}
+
+class Game {
+    player1 = null;
+    player2 = null;
+    shots = [];
+
+    constructor() {
+        player1 = new Player(100,100,0,550,5,0,0);
+        player2 = new Player(100,100,1000,550,5,0,0);
+        shots = [];
+    }
+
+    update() {
+        this.player1.update();
+        this.player2.update();
+        for(shot of shots) {
+            shot.update();
+        }
+    }
+
+    loop() {
+        this.update();
+        this.draw();
+
+        requestAnimationFrame(game.loop);
+    }
+}
+
 
 // const firstDrop = {
 //     x: 30,
@@ -260,3 +317,7 @@ document.addEventListener('keyup', keyUp2)
 
 document.addEventListener('keydown',shotCheck)
 
+
+
+const game = new Game();
+game.loop(); 
